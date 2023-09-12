@@ -4,10 +4,10 @@ from django.conf import settings
 
 def get_info(request):
     api_key = settings.WEATHER_API_KEY
-    city = 'New York'
+    city = 'India'
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
 
-    response = request.get(url)
+    response = requests.get(url)
     data = response.json()  
 
     context = {
@@ -15,6 +15,6 @@ def get_info(request):
         'description': data['weather'][0]['description'],
     }
     
-    return render(request, 'weatherapp/weather.html', context)
+    return render(request, 'index.html', context)
 
 # Create your views here.
