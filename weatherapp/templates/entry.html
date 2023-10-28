@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyWatch</title>
+</head>
+<body>
+    <h1>SkyWatch</h1>
+    <form action method='POST' id="weather_form">
+        {% csrf_token %}
+        <label: >Which place would you like to know the weather for?</label>
+        <input type="text" name="location" placeholder="Enter Location" id="location">
+        <button type="submit" id="submit_button">Submit</button>
+    </form>
+</body>
+</html>

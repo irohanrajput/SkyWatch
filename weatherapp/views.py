@@ -2,22 +2,24 @@ from django.shortcuts import render
 import requests
 from django.conf import settings
 
+
 def get_info(request):
-    api_key = settings.WEATHER_API_KEY
-    city = 'delhi, in'
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
+    if request.method == "POST":
+        place = request.POST["location"]
 
-    response = requests.get(url)
-    data = response.json()  
-    temp_in_kelvin = data['main']['temp']
-    temp_in_celsius = round(temp_in_kelvin -273.15, 3)
+        if place:
+            api_key = settings.WEATHER_API_KEY
+            city = place
+            url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 
-    context = {
-        'temperature': temp_in_celsius,
-        'description': data['weather'][0]['description'],
-        'city': city
-    }
-    
-    return render(request, 'index.html', context)
+            data = requests.get(url).json()
+            temp_in_kelvin = data["main"]["temp"]
+            temp_in_celsius = round(temp_in_kelvin - 273.15, 3)
 
-# Create your views here.
+            context = {
+                "temperature": temp_in_celsius, 
+                "description": data["weather"][0]["description"], 
+                "city": city,
+                }
+            return render(request, "index.html", context)
+    return render(request, "entry.html")
